@@ -16,12 +16,12 @@ exports.sendOtpService = async (phone) => {
 };
 //const authRepo = require("./auth.repository");
 // Function to verify OTP
-exports.verifyOtpService = async ({ phone, otp }) => {
-  if (!phone || !otp) {
-    throw new Error("Phone and OTP are required");
+exports.verifyOtpService = async ({ phoneNumber, otp }) => {
+  if (!phoneNumber || !otp) {
+    throw new Error("Phone number and OTP are required");
   }
 
-  const user = await userRepository.findByPhone(phone);
+  const user = await userRepository.findByPhone(phoneNumber);
 
   if (!user) {
     return "User not found";
@@ -37,16 +37,21 @@ exports.verifyOtpService = async ({ phone, otp }) => {
   }
 
   console.log("Before update");
-  const token = jwt.sign({ phoneNumber: user.phoneNumber }, process.env.JWT_SECRET, { expiresIn: "1h" });
+  const jwtSecret = process.env.JWT_SECRET;
+  if (!jwtSecret) {
+    throw new Error("JWT secret is not configured");
+  }
+
+  const token = jwt.sign({ phoneNumber: user.phoneNumber }, jwtSecret, {
+    expiresIn: "1h",
+  });
   console.log("Generated JWT token:", token);
   const xyz = await userRepository.deleteOTP(user.phoneNumber);
   console.log("Updated user:", xyz);
-   
-  
+
   return {
-    phoneNumber: user.phone,
+    phoneNumber: user.phoneNumber,
     xyz,
     token,
-
   };
 };

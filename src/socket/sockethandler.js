@@ -2,11 +2,12 @@ const Locker = require("../models/locker");
 // sending locker data to client after socket connection 
 exports.LockerHandler = (socket, io) => {
 
-    socket.on("getlocker", async (lockers) => {
+    socket.on("getlocker", async () => {
         try {
-            const lockers = await Locker.find({});
+            const lockers = await Locker.find();
+            console.log("Sending lockers data to client:", lockers);
 
-            lockers(lockers);
+            socket.emit("lockerdata", lockers);
 
         } catch (error) {
             console.error("Error fetching lockers:", error);

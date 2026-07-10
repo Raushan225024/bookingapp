@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
-const lockSchema = new mongoose.Schema(
-  {
+const lockSchema = new mongoose.Schema({
+  
     lockId: {
       type: String,
       required: true,
@@ -12,11 +12,15 @@ const lockSchema = new mongoose.Schema(
       type: String,
       enum: ["available", "tempLock", "booked"],
       default: "available"
-    }
+    },
   },
   {
     timestamps: true
   }
+
+ 
+
+
 );
 
 module.exports = mongoose.model("Lock", lockSchema);

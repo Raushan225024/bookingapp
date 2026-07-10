@@ -2,9 +2,8 @@ const jwt = require("jsonwebtoken");
 
 const socketAuth = (socket, next) => {
     try {
-        //const token = socket.handshake.auth.token;
-        const token =
-  socket.handshake.headers.authorization?.split(" ")[1];
+        const token = socket.handshake.auth.token;
+       // const token =socket.handshake.headers.authorization?.split(" ")[1];
         if (!token) {
             return next(new Error("Token not provided"));
         }
