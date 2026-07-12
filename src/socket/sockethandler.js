@@ -26,10 +26,10 @@ exports.TempLockHandler = (socket, io) => {
         try{
             await Locker.findOneAndUpdate({ lockId: lockerId,
                 status: "available"
-             }, { status: "templock" }, { new: true });
+             }, { status: "tempLock" }, { new: true });
              socket.broadcast.emit("templockerdata", {
                 lockerId: lockerId,
-                status: "templock"
+                status: "tempLock"
              });
         }
         catch(error){
@@ -49,7 +49,7 @@ exports.UnlockTempLockHandler = (socket, io) => {
         try{
             await Locker.findOneAndUpdate({ 
                 lockId: lockerId,
-                status: "templock"
+                status: "tempLock"
             
             },
             {

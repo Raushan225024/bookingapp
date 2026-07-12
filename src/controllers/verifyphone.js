@@ -135,7 +135,16 @@ const phoneNumber = req.user.phoneNumber; // Get user data from JWT middleware
         )
       )
     );
-
+//  finnal update of locker status templock to booked
+await Promise.all(
+  tempDoc.lockers.map((lockerId) =>
+    Locker.findOneAndUpdate(
+      { lockId: lockerId, status: "tempLock" },
+      { status: "booked" },
+      { new: true }
+    )
+  )
+);
     // Payment verified
     return res.status(200).json({
       success: true,
