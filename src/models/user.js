@@ -14,7 +14,11 @@ const userSchema = new mongoose.Schema({
                 type: String,
                 required: true
             },
-
+            status: {
+                type: String,
+                enum: ["available", "tempLock", "booked"],
+                default: "booked"
+            },
             bookedAt: {
                 type: Date,
                 default: Date.now
@@ -22,19 +26,11 @@ const userSchema = new mongoose.Schema({
         }
     ],
 
-    lockerCount: {
-        type: Number,
-        default: 0
-    }
+    
 
 }, {
     timestamps: true
 });
 
-// Automatically update lockerCount
-userSchema.pre("save", function (next) {
-    this.lockerCount = this.lockers.length;
-    next();
-});
 
 module.exports = mongoose.model("User", userSchema);

@@ -2,6 +2,8 @@ const { sendOtpService, verifyOtpService } = require("../services/otpservice");
 const { saveTempPassword } = require("../repo/tempPasswordRepo");
 const TempPassword = require("../models/temppassword");
 const Password = require("../models/password");
+const Locker = require("../models/locker");
+const User = require("../models/user");
 
 const Razorpay = require("razorpay");
 const crypto = require("crypto");
@@ -145,6 +147,15 @@ await Promise.all(
     )
   )
 );
+await User.findOneAndUpdate(
+  { userId: tempDoc.phoneNumber },
+  { $push: { lockers: { $each: tempDoc.lockers.map(lockerId => ({ lockerId, status: "booked" })) } } },
+  {  
+        upsert: true,
+        returnDocument: "after",
+        setDefaultsOnInsert: true
+     }
+);
     // Payment verified
     return res.status(200).json({
       success: true,
@@ -160,3 +171,20 @@ await Promise.all(
     });
   }
 };
+// user lockers controller
+exports.getUserLockers = async (req, res) => {
+  try {
+    const user = await User.findOne({ userId: req.user.phoneNumber });
+    console.log("User lockers retrieved:", user);
+    return res.status(200).json({
+      success: true,
+      user : user ,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to retrieve user lockers",
+    });
+  }}
+  // get passwords controller

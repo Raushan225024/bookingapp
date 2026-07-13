@@ -10,5 +10,6 @@ router.post("/verify-otp", controller1.verifyOTP);
 router.post("/verify-password", controller2.verifyPassword);
 router.post("/create-order",JWTauth,controller1.createOrder);
 router.post("/verify-payment",JWTauth,controller1.verifyPayment);
-
+router.post("/user-lockers",JWTauth,controller1.getUserLockers);
+router.post("/get-passwords",JWTauth,controller1.getPasswords);
 module.exports = router;
