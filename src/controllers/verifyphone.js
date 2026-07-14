@@ -188,3 +188,6 @@ exports.getUserLockers = async (req, res) => {
     });
   }}
   // get passwords controller
+  exports.getPasswords = async (req, res) => {
+    console.log("get password by sms");
+  }

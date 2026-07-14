@@ -1,5 +1,5 @@
 const Password = require("../models/password");
-const mqttClient = require("../config/mqtt");
+const mqttClient = require("./mqtt/mqttclient");
 
 exports.openLocker = async (req, res) => {
   try {
