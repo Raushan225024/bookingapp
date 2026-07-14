@@ -7,7 +7,7 @@ const controller2 = require("../controllers/verifypassword");
 // Route to send OTP
 router.post("/send-otp", controller1.sendOTP);
 router.post("/verify-otp", controller1.verifyOTP);
-router.post("/verify-password", controller2.verifyPassword);
+router.post("/verify-password", controller2.openLocker);
 router.post("/create-order",JWTauth,controller1.createOrder);
 router.post("/verify-payment",JWTauth,controller1.verifyPayment);
 router.post("/user-lockers",JWTauth,controller1.getUserLockers);
