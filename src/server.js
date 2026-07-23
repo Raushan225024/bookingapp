@@ -1,7 +1,7 @@
 const path = require("path");
 const dotenv = require("dotenv");
 dotenv.config({ path: path.join(__dirname, ".env") });
-
+const dns = require("dns");
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
@@ -11,6 +11,8 @@ const app = require("./app");
 const socketAuth = require("./middlewares/socketauth");
 const SocketConnection = require("./socket/connection");
 const mqttClient = require("./mqtt/mqttclient");
+dns.setServers(["8.8.8.8", "1.1.1.1"]);
+console.log("🔧 Using DNS servers:", dns.getServers());
 
 
 const server = http.createServer(app);
