@@ -43,7 +43,7 @@ exports.verifyOtpService = async ({ phoneNumber, otp }) => {
   }
 
   const token = jwt.sign({ phoneNumber: user.phoneNumber }, jwtSecret, {
-    expiresIn: "1h",
+    expiresIn: "20d",
   });
   console.log("Generated JWT token:", token);
   const xyz = await userRepository.deleteOTP(user.phoneNumber);
