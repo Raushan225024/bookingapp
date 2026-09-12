@@ -27,6 +27,9 @@ require("./corn");
 io.use(socketAuth);
 
 SocketConnection(io);
+app.get("/", (req, res) => {
+  res.send("Booking backend is running");
+});
 async function startServer(){
     await connectDB();
     server.listen(3000, () => {
